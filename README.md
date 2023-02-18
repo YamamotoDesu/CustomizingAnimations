@@ -72,3 +72,21 @@
     }
  ```
  
+ 
+<img width="300" alt="スクリーンショット 2023-02-18 14 56 33" src="https://user-images.githubusercontent.com/47273077/219846332-be61def3-e142-4f96-911d-9d088b0607ee.gif">
+
+```swift
+ @State private var enabled = false
+    
+    var body: some View {
+        Button("Tap Me") {
+            enabled.toggle()
+        }
+        .frame(width: 200, height: 200)
+        .background(enabled ? Color.blue : Color.red)
+        .animation(nil, value: enabled)
+        .foregroundColor(.white)
+        .clipShape(RoundedRectangle(cornerRadius: enabled ? 60 : 0))
+        .animation(.interpolatingSpring(stiffness: 10, damping: 1), value: enabled)
+    }
+ ```
