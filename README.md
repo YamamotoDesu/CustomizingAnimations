@@ -26,9 +26,6 @@
 
 <img width="300" alt="スクリーンショット 2023-02-18 14 56 33" src="https://user-images.githubusercontent.com/47273077/219844671-3d735486-6255-4116-a410-7dc3f133ab84.gif">
 
-![2023-02-18 15 17 13]()
-
-
 ```swift
  var body: some View {
         print(animationAmount)
@@ -52,3 +49,26 @@
         }
     }
  ```
+ 
+ 
+<img width="300" alt="スクリーンショット 2023-02-18 14 56 33" src="https://user-images.githubusercontent.com/47273077/219845329-5bb4a6b2-5e7f-4cba-888c-1548354c4216.gif">
+
+```swift
+ @State private var animationAmount = 0.0
+    
+    var body: some View {
+        VStack {
+            Button("Tap me") {
+                withAnimation(.interpolatingSpring(stiffness: 5, damping: 1)) {
+                    animationAmount += 360
+                }
+            }
+            .padding(50)
+            .background(Color.red)
+            .foregroundColor(.white)
+            .clipShape(Circle())
+            .rotation3DEffect(.degrees(animationAmount), axis: (x: 0, y: 1, z: 0))
+        }
+    }
+ ```
+ 
