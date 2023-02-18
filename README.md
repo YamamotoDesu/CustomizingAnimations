@@ -112,3 +112,35 @@ struct ContentView: View {
     }
 }
 ```
+
+<img width="300" alt="スクリーンショット 2023-02-18 14 56 33" src="https://user-images.githubusercontent.com/47273077/219848244-80ff9552-f93b-4a32-837b-6e6a7a305f6d.gif">
+
+```swift
+
+ @State private var dragAmount = CGSize.zero
+    
+    var body: some View {
+        HStack(spacing: 0) {
+            ForEach(0..<letters.count) { num in
+                Text(String(letters[num]))
+                    .padding(5)
+                    .font(.title)
+                    .background(enabled ? Color.blue : Color.red)
+                    .offset(dragAmount)
+                    .animation(
+                        .default.delay(Double(num) / 20),
+                        value: dragAmount
+                    )
+            }
+        }
+        .gesture(
+            DragGesture()
+                .onChanged { dragAmount = $0.translation }
+                .onEnded { _ in
+                    dragAmount = .zero
+                    enabled.toggle()
+                }
+        )
+    }
+
+```
