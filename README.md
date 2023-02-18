@@ -72,7 +72,6 @@
     }
  ```
  
- 
 <img width="300" alt="スクリーンショット 2023-02-18 14 56 33" src="https://user-images.githubusercontent.com/47273077/219846332-be61def3-e142-4f96-911d-9d088b0607ee.gif">
 
 ```swift
@@ -90,3 +89,26 @@
         .animation(.interpolatingSpring(stiffness: 10, damping: 1), value: enabled)
     }
  ```
+
+<img width="300" alt="スクリーンショット 2023-02-18 14 56 33" src="https://user-images.githubusercontent.com/47273077/219847462-50ee1cbb-b418-47b2-9f60-e4e25e5923da.gif">
+
+```swift
+struct ContentView: View {
+    @State private var dragAmount = CGSize.zero
+    
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.red]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            .frame(width: 300, height: 200)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .offset(dragAmount)
+            .gesture(
+                DragGesture()
+                    .onChanged { dragAmount = $0.translation }
+                    .onEnded { _ in
+                        dragAmount = .zero
+                    }
+            )
+            .animation(.spring(), value: dragAmount)
+    }
+}
+```
