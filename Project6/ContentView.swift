@@ -10,31 +10,31 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @State private var animationAmount: CGFloat = 1
-
+    let letters = Array("Hello, SwiftUI")
+    @State private var enabled = false
+    @State private var dragAmount = CGSize.zero
+    
     var body: some View {
-        Button("Tap Me") {
-            self.animationAmount += 1
+        HStack(spacing: 0) {
+            ForEach(0..<letters.count) { num in
+                Text(String(letters[num]))
+                    .padding(5)
+                    .font(.title)
+                    .background(enabled ? Color.blue : Color.red)
+                    .offset(dragAmount)
+                    .animation(
+                        .default.delay(Double(num) / 20),
+                        value: dragAmount
+                    )
+            }
         }
-        .padding(50)
-        .background(Color.red)
-        .foregroundColor(.white)
-        .clipShape(Circle())
-        .scaleEffect(animationAmount)
-        .blur(radius: (animationAmount - 1) * 3)
-//        .animation(.default)
-//        .animation(.interpolatingSpring(stiffness: 50, damping: animationAmount))
-//        .animation(.easeInOut(duration: 2), value: animationAmount)
-//        .animation(
-//            .easeInOut(duration: 2)
-//            .delay(1),
-//            value: animationAmount
-//        )
-        .animation(
-            .easeInOut(duration: 1)
-            .repeatForever(autoreverses: true),
-//            .repeatCount(3, autoreverses: true),
-            value: animationAmount
+        .gesture(
+            DragGesture()
+                .onChanged { dragAmount = $0.translation }
+                .onEnded { _ in
+                    dragAmount = .zero
+                    enabled.toggle()
+                }
         )
     }
 }
